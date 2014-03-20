@@ -9,6 +9,7 @@ public class Spawn : MonoBehaviour
 
 	// Use this for initialization
 	void Start () {
+        
 		switch(PlayerPrefs.GetInt("GameMode"))
 		{
 		case 0: // tutorial
