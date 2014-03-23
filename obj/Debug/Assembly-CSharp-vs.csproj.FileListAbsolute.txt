@@ -1,0 +1,13 @@
+C:\Users\planettop92\Documents\GitHub\Climber\obj\Debug\Assembly-CSharp-vs.csprojResolveAssemblyReference.cache
+C:\Users\planettop92\Documents\GitHub\Climber\Temp\bin\Debug\Assembly-CSharp.dll
+C:\Users\planettop92\Documents\GitHub\Climber\Temp\bin\Debug\Assembly-CSharp.pdb
+C:\Users\planettop92\Documents\GitHub\Climber\Temp\bin\Debug\Assembly-UnityScript-firstpass.dll
+C:\Users\planettop92\Documents\GitHub\Climber\Temp\bin\Debug\UnityEditor.dll
+C:\Users\planettop92\Documents\GitHub\Climber\Temp\bin\Debug\UnityEngine.dll
+C:\Users\planettop92\Documents\GitHub\Climber\Temp\bin\Debug\Mono.Cecil.dll
+C:\Users\planettop92\Documents\GitHub\Climber\Temp\bin\Debug\nunit.framework.dll
+C:\Users\planettop92\Documents\GitHub\Climber\Temp\bin\Debug\Unity.DataContract.dll
+C:\Users\planettop92\Documents\GitHub\Climber\Temp\bin\Debug\ICSharpCode.NRefactory.dll
+C:\Users\planettop92\Documents\GitHub\Climber\Temp\bin\Debug\Assembly-CSharp-firstpass.pdb
+C:\Users\planettop92\Documents\GitHub\Climber\obj\Debug\Assembly-CSharp.dll
+C:\Users\planettop92\Documents\GitHub\Climber\obj\Debug\Assembly-CSharp.pdb
