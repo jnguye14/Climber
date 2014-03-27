@@ -7,9 +7,8 @@ public class Body : MonoBehaviour
     private GameObject RArm;
     private GameObject LLeg;
     private GameObject RLeg;
+    private GameObject body;
     private float speed = 0.5f;
-
-    private GameObject selectedLimb = null;
 
     // Use this for initialization
     void Start()
@@ -26,81 +25,118 @@ public class Body : MonoBehaviour
         RLeg = GameObject.Find("RLeg");
         RLeg.SendMessage("SetUpperLimit",0f);
         RLeg.SendMessage("SetLowerLimit",-90f);
-    }
-
-    void SelectLimb(GameObject limb)
-    {
-        if (selectedLimb != null)
-        {
-            selectedLimb.GetComponent<MeshRenderer>().material.color = Color.grey;
-        }
-        selectedLimb = limb;
-        if (selectedLimb != null)
-        {
-            selectedLimb.GetComponent<MeshRenderer>().material.color = Color.green;
-        }
-    }
-
-    void UnSelectLimb()
-    {
-        if (selectedLimb != null)
-        {
-            selectedLimb.GetComponent<MeshRenderer>().material.color = Color.grey;
-        }
-        selectedLimb = null;
+        body = GameObject.Find("Body");
     }
 
     // Update is called once per frame
     void Update()
     {
+        CenterBody();
+        TurnBody();
+
         //Debug.Log(GetAngle(LArm));
-        LArm.SendMessage("SetUpperLimit",GetAngle(LLeg));
-        RArm.SendMessage("SetLowerLimit",GetAngle(RLeg));
+        LArm.SendMessage("SetUpperLimit", GetAngle(LLeg));
+        RArm.SendMessage("SetLowerLimit", GetAngle(RLeg));
 
-        //Debug.Log(GetAngle(RLeg));
-
-        // basic translations for testing
+        /*// basic translations for testing
         if (Input.GetKey(KeyCode.W))
         {
-            this.transform.Translate(Vector3.up * speed);
+            body.transform.Translate(Vector3.up * speed);
         }
         if (Input.GetKey(KeyCode.S))
         {
-            this.transform.Translate(Vector3.down * speed);
+            body.transform.Translate(Vector3.down * speed);
         }
         if (Input.GetKey(KeyCode.A))
         {
-            this.transform.Translate(Vector3.left * speed);
+            body.transform.Translate(Vector3.left * speed);
         }
         if (Input.GetKey(KeyCode.D))
         {
-            this.transform.Translate(Vector3.right * speed);
+            body.transform.Translate(Vector3.right * speed);
         }
+        //*/
 
-        // basic rotations for testing
+        /* // basic rotations for testing
         if (Input.GetKey(KeyCode.J))
         {
-            this.transform.Rotate(Vector3.forward, 2.0f * speed);
+            body.transform.Rotate(Vector3.forward, 2.0f * speed);
         }
         if (Input.GetKey(KeyCode.L))
         {
-            this.transform.Rotate(Vector3.forward, -2.0f * speed);
+            body.transform.Rotate(Vector3.forward, -2.0f * speed);
+        }//*/
+    }
+
+    private void TurnBody()
+    {
+        // Create two vectors in the form of an X across the body's limbs
+        Vector3 positiveLine = RArm.transform.position - LLeg.transform.position;
+        Vector3 negativeLine = LArm.transform.position - RLeg.transform.position;
+        positiveLine.Normalize();
+        negativeLine.Normalize();
+        
+        // find the angle of the vectors and the bodies up vector
+        float leftAngle = Mathf.Acos(Vector3.Dot(positiveLine, body.transform.up)) * Mathf.Rad2Deg;
+        float rightAngle = Mathf.Acos(Vector3.Dot(negativeLine, body.transform.up)) * Mathf.Rad2Deg;
+        //Debug.Log("Left: " + leftAngle + "; Right: " + rightAngle);
+
+        float buffer = 5.0f; // degrees
+
+        // rotate left/right if the difference is greater on one side over the other
+        if (rightAngle - leftAngle > buffer)
+        {
+            body.transform.Rotate(Vector3.forward, 2.0f * speed); // rotate left
         }
-        //    LArm.SendMessage("SetAngle",90f);
+        else if (leftAngle - rightAngle > buffer)
+        {
+            body.transform.Rotate(Vector3.forward, -2.0f * speed); // rotate right
+        }
+    }
+
+    private void CenterBody()
+    {
+        //Debug.Log("Distances: " + GetDistance(RArm) + " " + GetDistance(LLeg) + " " + GetDistance(LArm) + " " + GetDistance(RLeg));
+
+        float buffer = 0.5f;
+
+        // translate body as best as it can between its four limbs
+        if (GetDistance(RArm) + buffer < GetDistance(LLeg))
+        {
+            body.transform.Translate((LLeg.transform.position - body.transform.position).normalized * 0.01f);
+        }
+        if (GetDistance(LLeg) + buffer < GetDistance(RArm))
+        {
+            body.transform.Translate((RArm.transform.position - body.transform.position).normalized * 0.01f);
+        }
+        if (GetDistance(LArm) + buffer < GetDistance(RLeg))
+        {
+            body.transform.Translate((RLeg.transform.position - body.transform.position).normalized * 0.01f);
+        }
+        if (GetDistance(RLeg) + buffer < GetDistance(LArm))
+        {
+            body.transform.Translate((LArm.transform.position - body.transform.position).normalized * 0.01f);
+        }
+    }
+
+    private float GetDistance(GameObject limb)
+    {
+        Vector3 direction = limb.transform.position - body.transform.position;
+        return direction.magnitude;
     }
 
     // returns an angle in degrees between -180 and 180 with 0 being directly right
     private float GetAngle(GameObject limb)
     {
-        Vector3 direction = limb.transform.position - this.transform.position;
+        Vector3 direction = limb.transform.position - body.transform.position;
         direction.Normalize();
-        if (limb.transform.localPosition.y < 0)
+        if (limb.transform.position.y < body.transform.position.y)
         {
-            return -Mathf.Acos(Vector3.Dot(direction, this.transform.right)) * Mathf.Rad2Deg;
+            return -Mathf.Acos(Vector3.Dot(direction, body.transform.right)) * Mathf.Rad2Deg;
         }
         else
         {
-            return Mathf.Acos(Vector3.Dot(direction, this.transform.right)) * Mathf.Rad2Deg;
+            return Mathf.Acos(Vector3.Dot(direction, body.transform.right)) * Mathf.Rad2Deg;
         }
     }
 }
