@@ -90,7 +90,7 @@ public class DrawLimb : MonoBehaviour
         else // mwahahaha
         {
             //Physics.gravity = new Vector3(0f, gravity, 0f);
-            this.rigidbody.useGravity = true;
+            //this.rigidbody.useGravity = true;
         }
 
         
@@ -111,6 +111,8 @@ public class DrawLimb : MonoBehaviour
             r.SetPosition(0, body.transform.position);
             r.SetPosition(1, this.transform.position);
         }
+		this.transform.position = new Vector3(this.transform.position.x,this.transform.position.y,-1.8f);
+
     }
 
     // clicked on appendage, change to selected color, release the rock if it's holding any
