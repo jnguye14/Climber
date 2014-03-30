@@ -68,6 +68,7 @@ public class Body : MonoBehaviour
         }//*/
     }
 
+    // rotate body based on angle of limbs
     private void TurnBody()
     {
         // Create two vectors in the form of an X across the body's limbs
@@ -94,11 +95,11 @@ public class Body : MonoBehaviour
         }
     }
 
+    // centers body between limbs
     private void CenterBody()
     {
-        //Debug.Log("Distances: " + GetDistance(RArm) + " " + GetDistance(LLeg) + " " + GetDistance(LArm) + " " + GetDistance(RLeg));
-
         float buffer = 0.5f;
+        //Debug.Log("Distances: " + GetDistance(RArm) + " " + GetDistance(LLeg) + " " + GetDistance(LArm) + " " + GetDistance(RLeg));
 
         // translate body as best as it can between its four limbs
         if (GetDistance(RArm) + buffer < GetDistance(LLeg))
@@ -119,13 +120,14 @@ public class Body : MonoBehaviour
         }
     }
 
+    // used in CenterBody(), get's the distance from the limb
     private float GetDistance(GameObject limb)
     {
         Vector3 direction = limb.transform.position - body.transform.position;
         return direction.magnitude;
     }
 
-    // returns an angle in degrees between -180 and 180 with 0 being directly right
+    //*// returns an angle in degrees between -180 and 180 with 0 being directly right
     private float GetAngle(GameObject limb)
     {
         Vector3 direction = limb.transform.position - body.transform.position;
@@ -138,5 +140,5 @@ public class Body : MonoBehaviour
         {
             return Mathf.Acos(Vector3.Dot(direction, body.transform.right)) * Mathf.Rad2Deg;
         }
-    }
+    }//*/
 }

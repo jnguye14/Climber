@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[RequireComponent(typeof(MeshRenderer))]
 [RequireComponent(typeof(LineRenderer))]
 public class DrawLimb : MonoBehaviour
 {
@@ -10,16 +11,60 @@ public class DrawLimb : MonoBehaviour
     public float limbLength = 2.0f;
     public float limbReach = 2.0f;
     public bool isArm = false;
-    public bool hasRock = false; // used to release rock
+    private bool hasRock = true; // used to release rock
     public bool isGrabbingRock = false;
 
     public Color selectedColor = Color.green;
     public Color nonSelectedColor = Color.gray;
     public Color grabColor = Color.blue;
-    
-    private float lowerLimit = 180f;
-    private float upperLimit = -180f;
 
+    // how far counter-clockwise player can go
+    private float ll;
+    public float lowerLimit
+    {
+        get
+        {
+            return ll;
+        }
+        set
+        {
+            ll = value;
+        }
+    }
+
+    // how far clockwise limb can go
+    private float ul;
+    public float upperLimit
+    {
+        get
+        {
+            return ul;
+        }
+        set
+        {
+            ul = value;
+        }
+    }
+
+    public Vector3 direction
+    {
+        get
+        {
+            Vector3 direction = this.transform.position - body.transform.position;
+            return direction.normalized;
+        }
+    }
+
+    public float magnitude
+    {
+        get
+        {
+            Vector3 direction = this.transform.position - body.transform.position;
+            return direction.magnitude;
+        }
+    }
+
+    //public float gravity = -1.0f;
     // Use this for initialization
     void Start()
     {
@@ -32,22 +77,31 @@ public class DrawLimb : MonoBehaviour
         if (hasRock)
         {
             // clamp position to rock's position
-            this.transform.position = target.transform.position;
+            if (target != null)
+            {
+                this.transform.position = target.transform.position;
+            }
             this.GetComponent<MeshRenderer>().material.color = grabColor;
+
+            // to prevent limb from being thrown everywhere
+            this.rigidbody.velocity = Vector3.zero;
+            this.rigidbody.useGravity = false;
+        }
+        else // mwahahaha
+        {
+            //Physics.gravity = new Vector3(0f, gravity, 0f);
+            this.rigidbody.useGravity = true;
         }
 
-        // to prevent limb from being thrown everywhere
-        this.rigidbody.velocity = Vector3.zero;
         
         // limb is limited within a certain reach
-        Vector3 direction = this.transform.position - body.transform.position;
-        if (direction.magnitude < limbLength)
+        if (magnitude < limbLength)
         {
-            this.transform.position = body.transform.position + direction.normalized * limbLength;
+            this.transform.position = body.transform.position + direction * limbLength;
         }
-        else if(direction.magnitude > limbLength + limbReach)
+        else if(magnitude > limbLength + limbReach)
         {
-            this.transform.position = body.transform.position + direction.normalized * (limbLength + limbReach);
+            this.transform.position = body.transform.position + direction * (limbLength + limbReach);
         }
         
         // draw the limb from the body to the appendage
@@ -76,7 +130,7 @@ public class DrawLimb : MonoBehaviour
         {
             if (GetAngle() > upperLimit && GetAngle() < lowerLimit)
             {
-                SetAngle((GetAngle() < 0) ? upperLimit : lowerLimit);
+                SetAngle((GetAngle() < 0) ? lowerLimit : upperLimit);
             }
         }
         else
@@ -85,7 +139,7 @@ public class DrawLimb : MonoBehaviour
             {
                 SetAngle(lowerLimit);
             }
-            if (GetAngle() > upperLimit)
+            else if (GetAngle() > upperLimit)
             {
                 if (lowerLimit == -180.0f && GetAngle() > 0) // special case, LLeg
                 {
@@ -96,7 +150,7 @@ public class DrawLimb : MonoBehaviour
                     SetAngle(upperLimit);
                 }
             }
-        }
+        }//*/
     }
 
     // mouse released, unselect limb
@@ -117,8 +171,9 @@ public class DrawLimb : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         if ((isArm && other.gameObject.tag == "Handhold") ||
-                (!isArm && other.gameObject.tag == "FootHold") ||
-                (other.gameObject.tag == "MultiHold"))
+                (!isArm && other.gameObject.tag == "Foothold") ||
+                (other.gameObject.tag == "Multihold") ||
+                (other.gameObject.tag == "Checkpoint"))
         {
             target = other.gameObject;
             hasRock = true;
@@ -164,15 +219,27 @@ public class DrawLimb : MonoBehaviour
     // returns an angle in degrees between -180 and 180 with 0 being directly right
     private float GetAngle()
     {
-        Vector3 direction = this.transform.position - body.transform.position;
-        direction.Normalize();
-        if (this.transform.localPosition.y < 0)
+        if (isUnder())//this.transform.localPosition.y < 0)
         {
             return -Mathf.Acos(Vector3.Dot(direction, body.transform.right)) * Mathf.Rad2Deg;
         }
         else
         {
             return Mathf.Acos(Vector3.Dot(direction, body.transform.right)) * Mathf.Rad2Deg;
+        }
+    }
+
+    private bool isUnder()
+    {
+        Vector3 line = body.transform.right; // i.e. plane
+        Vector3 point = this.transform.position;
+        if(line.x * point.y - line.y * point.y < 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 }
