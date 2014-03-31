@@ -21,25 +21,27 @@ public class TitleMenu : MonoBehaviour
 		case 0:
 			guiText.enabled = true;
 			Rect buttonBox = new Rect (Screen.width * 0.5f, 0.0f, Screen.width * 0.2f, Screen.height * 0.2f);
-			if (GUI.Button (buttonBox, "Tutorial"))
+			if (GUI.Button (buttonBox, "Play"))
 			{
 				PlayerPrefs.SetInt("GameMode",0); // tutorial
-				Application.LoadLevel("Room");
+				//Application.LoadLevel("Room");
+                Application.LoadLevel("Tutorial");
 			}
 			
+            /*
 			buttonBox = new Rect (Screen.width * 0.5f, Screen.height * 0.2f, Screen.width * 0.2f, Screen.height * 0.2f);
 			if (GUI.Button (buttonBox, "Free Climb"))
 			{
 				PlayerPrefs.SetInt("GameMode",1); // free climb
-				Application.LoadLevel("Room");
+				//Application.LoadLevel("Room");
 			}
 			
 			buttonBox = new Rect (Screen.width * 0.5f, Screen.height * 0.4f, Screen.width * 0.2f, Screen.height * 0.2f);
 			if (GUI.Button (buttonBox, "Time Attack"))
 			{
-				PlayerPrefs.SetInt("GameMode",2); // tutorial
-				Application.LoadLevel("Room");
-			}
+				PlayerPrefs.SetInt("GameMode",2); // time attack
+				//Application.LoadLevel("Room");
+			}//*/
 			
 			buttonBox = new Rect (Screen.width * 0.5f, Screen.height * 0.6f, Screen.width * 0.2f, Screen.height * 0.2f);
 			if (GUI.Button (buttonBox, "Credits"))
@@ -47,13 +49,13 @@ public class TitleMenu : MonoBehaviour
 				Debug.Log("you pressed me");
 				mode = 1;
 			}
-			
+			/*
 			buttonBox = new Rect (Screen.width * 0.5f, Screen.height * 0.8f, Screen.width * 0.2f, Screen.height * 0.2f);
 			if (GUI.Button (buttonBox, "Manual"))
 			{
 				Debug.Log("you pressed me");
 				mode = 2;
-			}
+			}//*/
 			break;
 		case 1:
 			guiText.enabled = true;
