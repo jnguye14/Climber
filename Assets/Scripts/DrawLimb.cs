@@ -167,13 +167,11 @@ public class DrawLimb : MonoBehaviour
     {
         // move the limb around
         this.transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition + new Vector3(0, 0, body.transform.position.z - Camera.main.transform.position.z));
-        //Debug.Log(Angle);
-
+        
         if (upperLimit < lowerLimit) // special case, LArm
         {
             if (Angle > upperLimit && Angle < lowerLimit)
             {
-                //SetAngle((Angle < 0) ? lowerLimit : upperLimit);
                 Angle = (Angle < 0) ? lowerLimit : upperLimit;
             }
         }
@@ -181,12 +179,10 @@ public class DrawLimb : MonoBehaviour
         {
             if (Angle > 90.0f)
             {
-                //SetAngle(lowerLimit);
                 Angle = lowerLimit;
             }
             else if (Angle > upperLimit)
             {
-                //SetAngle(upperLimit);
                 Angle = upperLimit;
             }
         }
@@ -194,12 +190,10 @@ public class DrawLimb : MonoBehaviour
         {
             if (Angle < lowerLimit)
             {
-                //SetAngle(lowerLimit);
                 Angle = lowerLimit;
             }
             else if (Angle > upperLimit)
             {
-                //SetAngle(upperLimit);
                 Angle = upperLimit;
             }
         }
@@ -249,11 +243,6 @@ public class DrawLimb : MonoBehaviour
     {
         lowerLimit = l;
     }
-
-    /*void SetAngle(float deg)
-    {
-        Angle = deg;
-    }//*/
 
     private bool isUnder()
     {
