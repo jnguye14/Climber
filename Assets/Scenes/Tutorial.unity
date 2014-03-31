@@ -1844,12 +1844,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text:
-  - Hey you! (Click Me)
+  - Hey you!\n(Click Me)
   - I heard you're into Rock Climbing!
   - We're gonna test your skills!
   - To climb, click and drag your different limbs up from rock to rock.
   - Try your best to reach the top!
   - Now, enough talk.
+  - Let's Play!
+  - Let's Play!
+  - Let's Play!
   - Let's Play!
 --- !u!1 &1966453601
 GameObject:

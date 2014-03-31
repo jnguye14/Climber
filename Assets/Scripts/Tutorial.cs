@@ -7,8 +7,7 @@ public class Tutorial : MonoBehaviour
     int index = 0;
 
 	// Use this for initialization
-	void Start () {
-	
+	void Start (){
 	}
 	
 	// Update is called once per frame
@@ -30,6 +29,10 @@ public class Tutorial : MonoBehaviour
     void OnGUI()
     {
         GUI.skin.box.alignment = TextAnchor.MiddleCenter;
+        if (text[index].Contains("\\n"))
+        {
+            text[index] = text[index].Replace("\\n","\n");
+        }
         GUI.Box(new Rect(Screen.width * 0.4f,Screen.height * 0.2f,Screen.width*0.5f,Screen.height * 0.6f), text[index]);
     }
 }

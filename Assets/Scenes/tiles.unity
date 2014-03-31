@@ -4969,7 +4969,7 @@ GameObject:
   - 114: {fileID: 201388609}
   m_Layer: 0
   m_Name: LLeg
-  m_TagString: Untagged
+  m_TagString: LeftLeg
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6785,7 +6785,7 @@ Transform:
   m_PrefabParentObject: {fileID: 400014, guid: 64295026294ef45e3b6af3327411da3e, type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 275936195}
-  m_LocalRotation: {x: 0, y: 0, z: -.0553879924, w: .998464882}
+  m_LocalRotation: {x: 0, y: 0, z: -.0553879961, w: .998464942}
   m_LocalPosition: {x: .371673971, y: -.181735024, z: -.509662032}
   m_LocalScale: {x: .200000018, y: .0100000007, z: 1}
   m_Children: []
@@ -11586,6 +11586,7 @@ GameObject:
   - 81: {fileID: 475103622}
   - 114: {fileID: 475103627}
   - 114: {fileID: 475103628}
+  - 45: {fileID: 475103629}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -11678,6 +11679,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cdb982e12d1a49a99bd83f9a30199f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!45 &475103629
+Skybox:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 475103621}
+  m_Enabled: 1
+  m_CustomSkybox: {fileID: 2100000, guid: f939c3f93f8bf9d41be716a992c505c2, type: 2}
 --- !u!1 &475578890
 GameObject:
   m_ObjectHideFlags: 0
@@ -12761,7 +12770,7 @@ GameObject:
   - 114: {fileID: 527295063}
   m_Layer: 0
   m_Name: RLeg
-  m_TagString: Untagged
+  m_TagString: RightLeg
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -21018,7 +21027,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 839132558}
-  m_LocalRotation: {x: .408217937, y: -.234569728, z: .109381676, w: .875426054}
+  m_LocalRotation: {x: .408217967, y: -.234569743, z: .109381683, w: .875426114}
   m_LocalPosition: {x: 285.714996, y: 305.158691, z: 553.747314}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -22452,7 +22461,7 @@ GameObject:
   - 114: {fileID: 903981401}
   m_Layer: 0
   m_Name: LArm
-  m_TagString: Untagged
+  m_TagString: LeftHand
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -27691,7 +27700,7 @@ GameObject:
   - 114: {fileID: 1087156137}
   m_Layer: 0
   m_Name: RArm
-  m_TagString: Untagged
+  m_TagString: RightHand
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -54533,7 +54542,7 @@ Transform:
   m_PrefabParentObject: {fileID: 400014, guid: 64295026294ef45e3b6af3327411da3e, type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2063999709}
-  m_LocalRotation: {x: 0, y: 0, z: -.0553879924, w: .998464882}
+  m_LocalRotation: {x: 0, y: 0, z: -.0553879961, w: .998464942}
   m_LocalPosition: {x: .371673971, y: -.181735024, z: -.509662032}
   m_LocalScale: {x: .200000018, y: .0100000007, z: 1}
   m_Children: []
