@@ -1151,6 +1151,7 @@ GameObject:
   - 124: {fileID: 475103623}
   - 81: {fileID: 475103622}
   - 114: {fileID: 475103627}
+  - 45: {fileID: 475103628}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1232,6 +1233,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objToLookAt: {fileID: 1909194456}
   distance: 10
+--- !u!45 &475103628
+Skybox:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 475103621}
+  m_Enabled: 1
+  m_CustomSkybox: {fileID: 2100000, guid: f939c3f93f8bf9d41be716a992c505c2, type: 2}
 --- !u!1 &487627835
 GameObject:
   m_ObjectHideFlags: 0
@@ -3575,7 +3584,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1910218784}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.94184649, y: 3.87278676, z: -4.21367121}
+  m_LocalPosition: {x: -1.94184649, y: 3.87278676, z: -2.5376277}
   m_LocalScale: {x: .5, y: .5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -3923,7 +3932,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2125499428}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.30614567, y: 1.11271, z: -4.12010479}
+  m_LocalPosition: {x: -7.30614567, y: 1.11271, z: -1.79999995}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1909194457}
