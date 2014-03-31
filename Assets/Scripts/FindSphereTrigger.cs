@@ -15,6 +15,7 @@ public class FindSphereTrigger : MonoBehaviour {
 			foreach (GameObject s in spheres) {
 					s.GetComponent<Collider> ().isTrigger = true;
 				s.GetComponent<Renderer>().material.color = colors[i];
+				s.layer = 2;
 					
 			}
 			i++;
