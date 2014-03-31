@@ -46,11 +46,51 @@ public class DrawLimb : MonoBehaviour
         }
     }
 
+    public float Angle
+    {
+        get
+        {
+            if (isUnder())//this.transform.localPosition.y < 0)
+            {
+                return -Mathf.Acos(Vector3.Dot(direction, body.transform.right)) * Mathf.Rad2Deg;
+            }
+            else
+            {
+                return Mathf.Acos(Vector3.Dot(direction, body.transform.right)) * Mathf.Rad2Deg;
+            }
+        }
+        set
+        {
+            float deg = value;
+            //deg = Mathf.Clamp(deg, lowerLimit, upperLimit) * Mathf.Deg2Rad;
+
+            //deg -= Mathf.Acos(Vector3.Dot(Vector3.right, body.transform.right)) * Mathf.Rad2Deg;
+            //deg += Mathf.Acos(Vector3.Dot(Vector3.right, body.transform.right)) * Mathf.Rad2Deg;
+
+            //Vector3 direction = new Vector3(Mathf.Cos(deg), Mathf.Sin(deg), 0);
+            float theta = Mathf.Acos(body.transform.right.x);
+            float theta2 = Mathf.Asin(body.transform.right.y);
+            Vector3 direction = new Vector3(Mathf.Cos(deg + theta), Mathf.Sin(deg + theta2), 0);
+            float currentDistance = Mathf.Clamp((this.transform.position - body.transform.position).magnitude, limbLength, limbLength + limbReach);
+            this.transform.position = body.transform.position + direction.normalized * currentDistance;
+
+            /*if (ll < ul)
+            {
+                angle = Mathf.Clamp(value, ll, ul);
+            }
+            else // upper limit less than lower limit
+            {
+                angle = Mathf.Clamp(value, ll, ul);
+            }//*/
+        }
+    }
+
     public Vector3 direction
     {
         get
         {
             Vector3 direction = this.transform.position - body.transform.position;
+            direction = new Vector3(direction.x, direction.y, 0.0f);
             return direction.normalized;
         }
     }
@@ -89,6 +129,7 @@ public class DrawLimb : MonoBehaviour
         }
         else // mwahahaha
         {
+            this.rigidbody.velocity = Vector3.zero;
             //Physics.gravity = new Vector3(0f, gravity, 0f);
             //this.rigidbody.useGravity = true;
         }
@@ -112,7 +153,7 @@ public class DrawLimb : MonoBehaviour
             r.SetPosition(1, this.transform.position);
         }
 		this.transform.position = new Vector3(this.transform.position.x,this.transform.position.y,-1.8f);
-
+        this.transform.rotation = Quaternion.identity;
     }
 
     // clicked on appendage, change to selected color, release the rock if it's holding any
@@ -126,33 +167,42 @@ public class DrawLimb : MonoBehaviour
     {
         // move the limb around
         this.transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition + new Vector3(0, 0, body.transform.position.z - Camera.main.transform.position.z));
+        //Debug.Log(Angle);
 
-        // certain limbs are limited by their upper and lower angles
         if (upperLimit < lowerLimit) // special case, LArm
         {
-            if (GetAngle() > upperLimit && GetAngle() < lowerLimit)
+            if (Angle > upperLimit && Angle < lowerLimit)
             {
-                SetAngle((GetAngle() < 0) ? lowerLimit : upperLimit);
+                //SetAngle((Angle < 0) ? lowerLimit : upperLimit);
+                Angle = (Angle < 0) ? lowerLimit : upperLimit;
+            }
+        }
+        else if (lowerLimit == -179.0f) // special case, LLeg
+        {
+            if (Angle > 90.0f)
+            {
+                //SetAngle(lowerLimit);
+                Angle = lowerLimit;
+            }
+            else if (Angle > upperLimit)
+            {
+                //SetAngle(upperLimit);
+                Angle = upperLimit;
             }
         }
         else
         {
-            if (GetAngle() < lowerLimit)
+            if (Angle < lowerLimit)
             {
-                SetAngle(lowerLimit);
+                //SetAngle(lowerLimit);
+                Angle = lowerLimit;
             }
-            else if (GetAngle() > upperLimit)
+            else if (Angle > upperLimit)
             {
-                if (lowerLimit == -180.0f && GetAngle() > 0) // special case, LLeg
-                {
-                    SetAngle(lowerLimit);
-                }
-                else
-                {
-                    SetAngle(upperLimit);
-                }
+                //SetAngle(upperLimit);
+                Angle = upperLimit;
             }
-        }//*/
+        }
     }
 
     // mouse released, unselect limb
@@ -200,48 +250,28 @@ public class DrawLimb : MonoBehaviour
         lowerLimit = l;
     }
 
-    // sets the angle from counter clockwise around the z-axis
-    void SetAngle(float deg)
+    /*void SetAngle(float deg)
     {
-        deg = Mathf.Clamp(deg, lowerLimit, upperLimit) * Mathf.Deg2Rad;
-
-        //deg -= Mathf.Acos(Vector3.Dot(Vector3.right, body.transform.right)) * Mathf.Rad2Deg;
-        //deg += Mathf.Acos(Vector3.Dot(Vector3.right, body.transform.right)) * Mathf.Rad2Deg;
-
-        //Vector3 direction = new Vector3(Mathf.Cos(deg), Mathf.Sin(deg), 0);
-        float theta = Mathf.Acos(body.transform.right.x);
-        float theta2 = Mathf.Asin(body.transform.right.y);
-        Vector3 direction = new Vector3(Mathf.Cos(deg+theta), Mathf.Sin(deg+theta2), 0);
-        float currentDistance = Mathf.Clamp((this.transform.position - body.transform.position).magnitude, limbLength, limbLength + limbReach);
-        this.transform.position = body.transform.position + direction.normalized * currentDistance;
+        Angle = deg;
     }//*/
-
-
-
-    // returns an angle in degrees between -180 and 180 with 0 being directly right
-    private float GetAngle()
-    {
-        if (isUnder())//this.transform.localPosition.y < 0)
-        {
-            return -Mathf.Acos(Vector3.Dot(direction, body.transform.right)) * Mathf.Rad2Deg;
-        }
-        else
-        {
-            return Mathf.Acos(Vector3.Dot(direction, body.transform.right)) * Mathf.Rad2Deg;
-        }
-    }
 
     private bool isUnder()
     {
-        Vector3 line = body.transform.right; // i.e. plane
-        Vector3 point = this.transform.position;
-        if(line.x * point.y - line.y * point.y < 0)
+        // y = mx + b; // where b is at the body's center (localPosition 0,0,0)
+        float y = body.transform.right.y;
+        float x = body.transform.right.x;
+        float m = y / x;
+
+        Vector3 localPos = body.transform.InverseTransformDirection(this.transform.position - body.transform.position);
+
+        float y2 = m * localPos.x;
+        if(y2 - localPos.y < 0)
         {
-            return true;
+            return false;
         }
         else
         {
-            return false;
+            return true;
         }
     }
 }

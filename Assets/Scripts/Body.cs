@@ -21,7 +21,7 @@ public class Body : MonoBehaviour
         RArm.SendMessage("SetLowerLimit",-45f); // update sets to RLeg angle
         LLeg = GameObject.Find("LLeg");
         LLeg.SendMessage("SetUpperLimit",-90f);
-        LLeg.SendMessage("SetLowerLimit",-180f);
+        LLeg.SendMessage("SetLowerLimit",-179f);
         RLeg = GameObject.Find("RLeg");
         RLeg.SendMessage("SetUpperLimit",0f);
         RLeg.SendMessage("SetLowerLimit",-90f);
@@ -130,6 +130,8 @@ public class Body : MonoBehaviour
     //*// returns an angle in degrees between -180 and 180 with 0 being directly right
     private float GetAngle(GameObject limb)
     {
+        return limb.GetComponent<DrawLimb>().Angle;
+        /*
         Vector3 direction = limb.transform.position - body.transform.position;
         direction.Normalize();
         if (limb.transform.position.y < body.transform.position.y)
@@ -139,6 +141,6 @@ public class Body : MonoBehaviour
         else
         {
             return Mathf.Acos(Vector3.Dot(direction, body.transform.right)) * Mathf.Rad2Deg;
-        }
+        }//*/
     }//*/
 }
