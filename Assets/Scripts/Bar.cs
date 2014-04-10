@@ -16,6 +16,18 @@ public class Bar : MonoBehaviour
 	void Start ()
 	{
 		barFill = 0.5f; // start game half way
+        if (bgTexture == null)
+        {
+            bgTexture = new Texture2D(1,1);
+            bgTexture.SetPixel(0, 0, Color.white);
+            bgTexture.Apply();
+        }
+        if (fillTexture == null)
+        {
+            fillTexture = new Texture2D(1, 1);
+            fillTexture.SetPixel(0, 0, Color.white);
+            fillTexture.Apply();
+        }
 	}
 	
 	// Update is called once per frame
