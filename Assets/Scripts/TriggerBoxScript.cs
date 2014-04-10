@@ -1,9 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[System.Serializable]
 public class TriggerBoxScript : MonoBehaviour {
 	bool boxSizeDebugOn;
 	bool entranceDebugOn;
+	//
+	[SerializeField]
+	public bool isEndNode;
+	[SerializeField]
+	public bool isErrNode;
+	[SerializeField]
+	public string errNodeFeedback;
 	// Use this for initialization
 	void Start () {
 		boxSizeDebugOn = false;
@@ -26,7 +34,8 @@ public class TriggerBoxScript : MonoBehaviour {
 	}
 	void OnTriggerEnter(Collider other) {
 			GameObject chi = transform.GetChild(0).gameObject;
-			chi.renderer.enabled= entranceDebugOn && true;
+			chi.renderer.enabled= entranceDebugOn;
+			transform.parent.gameObject.SendMessage("addNodeToPathTaken", this.gameObject);
     }
 	void OnTriggerExit(Collider other) {
 			GameObject chi = transform.GetChild(0).gameObject;

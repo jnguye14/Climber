@@ -28994,6 +28994,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24bbb54cd6c434ec5ad08859bce5b8c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isEndNode: 0
+  isErrNode: 1
+  errNodeFeedback: Come at me bro
 --- !u!23 &1118184494
 Renderer:
   m_ObjectHideFlags: 0
@@ -29044,11 +29047,11 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1118184492}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.3691864, y: 6.09912348, z: -2.77570486}
+  m_LocalPosition: {x: -2.24204493, y: 4.71405315, z: -1.87234592}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 2020613309}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1909641305}
 --- !u!1 &1128870537
 GameObject:
   m_ObjectHideFlags: 0
@@ -51182,6 +51185,45 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3fb3a0e75eb327d419a8111ad646af3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &1909641304
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1909641305}
+  - 114: {fileID: 1909641306}
+  m_Layer: 0
+  m_Name: Cheetah
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1909641305
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1909641304}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -5.12714148, y: 1.38507056, z: -.903358936}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1118184497}
+  m_Father: {fileID: 0}
+--- !u!114 &1909641306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1909641304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69820bdeaee1148c5828bd1cfd31d4e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1914148628
