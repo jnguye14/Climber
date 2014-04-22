@@ -40,6 +40,10 @@ public class GorillaAnimScript : MonoBehaviour
         }
 	}
 
+    void OnMouseDown(){
+        Howl();
+    }
+
     // changes the eye lights from white to red and vice-versa
     void Howl()
     {

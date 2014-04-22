@@ -168,6 +168,12 @@ ModelImporter:
     4300008: Bone03
     4300010: Bone04
     4300012: Gorilla(1)
+    6400000: Bone01
+    6400002: Bone02
+    6400004: Bone03
+    6400006: Bone03(mirrored)
+    6400008: Bone04
+    6400010: Bone04(mirrored)
     11100000: //RootNode
     13700000: Gorilla(1)
   materials:
@@ -190,7 +196,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: .00999999978
     meshCompression: 0
-    addColliders: 0
+    addColliders: 1
     importBlendShapes: 1
     swapUVChannels: 0
     generateSecondaryUV: 0

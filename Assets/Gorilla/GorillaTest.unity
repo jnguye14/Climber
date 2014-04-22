@@ -530,6 +530,7 @@ GameObject:
   - 4: {fileID: 448368464}
   - 33: {fileID: 448368466}
   - 23: {fileID: 448368465}
+  - 64: {fileID: 448368467}
   m_Layer: 0
   m_Name: Bone01
   m_TagString: Untagged
@@ -578,6 +579,20 @@ MeshFilter:
     type: 3}
   m_PrefabInternal: {fileID: 1714379507}
   m_GameObject: {fileID: 448368463}
+  m_Mesh: {fileID: 4300000, guid: 458ee2d52baa7f14da4b5b5f9f26aed1, type: 3}
+--- !u!64 &448368467
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 6400000, guid: 458ee2d52baa7f14da4b5b5f9f26aed1,
+    type: 3}
+  m_PrefabInternal: {fileID: 1714379507}
+  m_GameObject: {fileID: 448368463}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_SmoothSphereCollisions: 0
+  m_Convex: 0
   m_Mesh: {fileID: 4300000, guid: 458ee2d52baa7f14da4b5b5f9f26aed1, type: 3}
 --- !u!1 &459143958
 GameObject:
@@ -766,6 +781,7 @@ GameObject:
   - 4: {fileID: 581629720}
   - 33: {fileID: 581629722}
   - 23: {fileID: 581629721}
+  - 64: {fileID: 581629723}
   m_Layer: 0
   m_Name: Bone03(mirrored)
   m_TagString: Untagged
@@ -814,6 +830,20 @@ MeshFilter:
     type: 3}
   m_PrefabInternal: {fileID: 1714379507}
   m_GameObject: {fileID: 581629719}
+  m_Mesh: {fileID: 4300004, guid: 458ee2d52baa7f14da4b5b5f9f26aed1, type: 3}
+--- !u!64 &581629723
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 6400006, guid: 458ee2d52baa7f14da4b5b5f9f26aed1,
+    type: 3}
+  m_PrefabInternal: {fileID: 1714379507}
+  m_GameObject: {fileID: 581629719}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_SmoothSphereCollisions: 0
+  m_Convex: 0
   m_Mesh: {fileID: 4300004, guid: 458ee2d52baa7f14da4b5b5f9f26aed1, type: 3}
 --- !u!1 &594146691
 GameObject:
@@ -1268,6 +1298,7 @@ GameObject:
   - 4: {fileID: 1021351320}
   - 33: {fileID: 1021351322}
   - 23: {fileID: 1021351321}
+  - 64: {fileID: 1021351323}
   m_Layer: 0
   m_Name: Bone04(mirrored)
   m_TagString: Untagged
@@ -1316,6 +1347,20 @@ MeshFilter:
     type: 3}
   m_PrefabInternal: {fileID: 1714379507}
   m_GameObject: {fileID: 1021351319}
+  m_Mesh: {fileID: 4300006, guid: 458ee2d52baa7f14da4b5b5f9f26aed1, type: 3}
+--- !u!64 &1021351323
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 6400010, guid: 458ee2d52baa7f14da4b5b5f9f26aed1,
+    type: 3}
+  m_PrefabInternal: {fileID: 1714379507}
+  m_GameObject: {fileID: 1021351319}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_SmoothSphereCollisions: 0
+  m_Convex: 0
   m_Mesh: {fileID: 4300006, guid: 458ee2d52baa7f14da4b5b5f9f26aed1, type: 3}
 --- !u!1 &1024662390
 GameObject:
@@ -1783,6 +1828,7 @@ GameObject:
   - 4: {fileID: 1345086094}
   - 33: {fileID: 1345086096}
   - 23: {fileID: 1345086095}
+  - 64: {fileID: 1345086097}
   m_Layer: 0
   m_Name: Bone03
   m_TagString: Untagged
@@ -1831,6 +1877,20 @@ MeshFilter:
     type: 3}
   m_PrefabInternal: {fileID: 1714379507}
   m_GameObject: {fileID: 1345086093}
+  m_Mesh: {fileID: 4300008, guid: 458ee2d52baa7f14da4b5b5f9f26aed1, type: 3}
+--- !u!64 &1345086097
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 6400004, guid: 458ee2d52baa7f14da4b5b5f9f26aed1,
+    type: 3}
+  m_PrefabInternal: {fileID: 1714379507}
+  m_GameObject: {fileID: 1345086093}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_SmoothSphereCollisions: 0
+  m_Convex: 0
   m_Mesh: {fileID: 4300008, guid: 458ee2d52baa7f14da4b5b5f9f26aed1, type: 3}
 --- !u!1 &1353005452
 GameObject:
@@ -1924,6 +1984,8 @@ GameObject:
   - 111: {fileID: 1450683937}
   - 114: {fileID: 1450683938}
   - 82: {fileID: 1450683939}
+  - 33: {fileID: 1450683941}
+  - 64: {fileID: 1450683940}
   m_Layer: 0
   m_Name: Gorilla_Howl
   m_TagString: Untagged
@@ -2031,6 +2093,26 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+--- !u!64 &1450683940
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1450683935}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_SmoothSphereCollisions: 0
+  m_Convex: 0
+  m_Mesh: {fileID: 4300012, guid: dcdd9efcf7611a04092229da6a3ab488, type: 3}
+--- !u!33 &1450683941
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1450683935}
+  m_Mesh: {fileID: 4300012, guid: dcdd9efcf7611a04092229da6a3ab488, type: 3}
 --- !u!1 &1484129531
 GameObject:
   m_ObjectHideFlags: 0
@@ -2550,6 +2632,7 @@ GameObject:
   - 4: {fileID: 1861226193}
   - 33: {fileID: 1861226195}
   - 23: {fileID: 1861226194}
+  - 64: {fileID: 1861226196}
   m_Layer: 0
   m_Name: Bone02
   m_TagString: Untagged
@@ -2597,6 +2680,20 @@ MeshFilter:
     type: 3}
   m_PrefabInternal: {fileID: 1714379507}
   m_GameObject: {fileID: 1861226192}
+  m_Mesh: {fileID: 4300002, guid: 458ee2d52baa7f14da4b5b5f9f26aed1, type: 3}
+--- !u!64 &1861226196
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 6400002, guid: 458ee2d52baa7f14da4b5b5f9f26aed1,
+    type: 3}
+  m_PrefabInternal: {fileID: 1714379507}
+  m_GameObject: {fileID: 1861226192}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_SmoothSphereCollisions: 0
+  m_Convex: 0
   m_Mesh: {fileID: 4300002, guid: 458ee2d52baa7f14da4b5b5f9f26aed1, type: 3}
 --- !u!1 &1864265958
 GameObject:
@@ -2825,6 +2922,7 @@ GameObject:
   - 4: {fileID: 2052255143}
   - 33: {fileID: 2052255145}
   - 23: {fileID: 2052255144}
+  - 64: {fileID: 2052255146}
   m_Layer: 0
   m_Name: Bone04
   m_TagString: Untagged
@@ -2873,6 +2971,20 @@ MeshFilter:
     type: 3}
   m_PrefabInternal: {fileID: 1714379507}
   m_GameObject: {fileID: 2052255142}
+  m_Mesh: {fileID: 4300010, guid: 458ee2d52baa7f14da4b5b5f9f26aed1, type: 3}
+--- !u!64 &2052255146
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 6400008, guid: 458ee2d52baa7f14da4b5b5f9f26aed1,
+    type: 3}
+  m_PrefabInternal: {fileID: 1714379507}
+  m_GameObject: {fileID: 2052255142}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_SmoothSphereCollisions: 0
+  m_Convex: 0
   m_Mesh: {fileID: 4300010, guid: 458ee2d52baa7f14da4b5b5f9f26aed1, type: 3}
 --- !u!1 &2072777058
 GameObject:
