@@ -8,7 +8,17 @@ public class Body : MonoBehaviour
     private GameObject LLeg;
     private GameObject RLeg;
     private GameObject body;
+    private GameObject head;
     private float speed = 0.5f;
+
+    // returns a value between 0 and pi
+    public float GetBalance
+    {
+        get
+        {
+            return Mathf.Acos(Vector3.Dot(head.transform.position - body.transform.position,Vector3.right));
+        }
+    }
 
     // Use this for initialization
     void Start()
@@ -26,6 +36,7 @@ public class Body : MonoBehaviour
         RLeg.SendMessage("SetUpperLimit",0f);
         RLeg.SendMessage("SetLowerLimit",-90f);
         body = GameObject.Find("Body");
+        head = GameObject.Find("Head");
     }
 
     // Update is called once per frame
