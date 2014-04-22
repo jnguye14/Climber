@@ -16,7 +16,7 @@ public class Body : MonoBehaviour
     {
         get
         {
-            return Mathf.Acos(Vector3.Dot(head.transform.position - body.transform.position, Vector3.right));
+            return Mathf.Acos(Vector3.Dot(head.transform.position - body.transform.position,Vector3.right));
         }
     }
 

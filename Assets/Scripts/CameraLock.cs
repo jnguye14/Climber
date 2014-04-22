@@ -5,6 +5,11 @@ public class CameraLock : MonoBehaviour
 {
     public GameObject objToLookAt;
     public float distance = 10.0f;
+
+	// Use this for initialization
+	void Start ()
+    {
+	}
 	
 	// Update is called once per frame
 	void Update ()
@@ -16,14 +21,4 @@ public class CameraLock : MonoBehaviour
             this.transform.position = pos;
         }
 	}
-
-    void LockCameraTo(GameObject obj)
-    {
-        objToLookAt = obj;
-    }
-
-    void UnLock()
-    {
-        objToLookAt = null;
-    }
 }

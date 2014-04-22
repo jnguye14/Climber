@@ -49,6 +49,8 @@ public class CreditScript : MonoBehaviour
         float topBuffer = 100;
         float bottomBuffer = 65;
 
+        FancyTop(windowRect.width);
+
         // Title Label
         float width = windowRect.width - 2 * leftBuffer;
         float height = GUI.skin.label.CalcHeight(new GUIContent("CREDITS"), width);
@@ -65,12 +67,12 @@ public class CreditScript : MonoBehaviour
         GUILayout.BeginArea(tempRect);
 
         // Draw the Scrolling Label
-        creditLength = (int)GUI.skin.label.CalcHeight(new GUIContent(creditText), width);
+        creditLength = (int)GUI.skin.GetStyle("PlainText").CalcHeight(new GUIContent(creditText), width);
         tempRect = new Rect(0, windowRect.height - amount, width, creditLength);
-        TextAnchor temp = GUI.skin.label.alignment;
-        GUI.skin.label.alignment = TextAnchor.MiddleCenter;
-        GUI.Label(tempRect, creditText);
-        GUI.skin.label.alignment = temp;
+        TextAnchor temp = GUI.skin.GetStyle("PlainText").alignment;
+        GUI.skin.GetStyle("PlainText").alignment = TextAnchor.MiddleCenter;
+        GUI.Label(tempRect, creditText, "PlainText");
+        GUI.skin.GetStyle("PlainText").alignment = temp;
 
         GUILayout.EndArea();
 
@@ -83,6 +85,18 @@ public class CreditScript : MonoBehaviour
 
         // make window draggable
         GUI.DragWindow();
+    }
+
+    void FancyTop(float topX)
+    {
+        float leafOffset = (topX / 2) - 64;
+        float frameOffset = (topX / 2) - 27;
+        float skullOffset = (topX / 2) - 20;
+
+        GUI.Label(new Rect(leafOffset + 35, 35, 0, 0), "", "RibbonBlue"); // added
+        GUI.Label(new Rect(leafOffset, 18, 0, 0), "", "GoldLeaf");
+        GUI.Label(new Rect(frameOffset, 3, 0, 0), "", "IconFrame");
+        //GUI.Label(new Rect(skullOffset, 12, 0, 0), "", "Skull");
     }
 
     // returns Rectangle adjusted to screen size
