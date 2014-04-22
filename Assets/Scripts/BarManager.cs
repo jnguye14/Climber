@@ -6,6 +6,18 @@ public class BarManager : MonoBehaviour
 {
     private BalanceSlider balance;
     private Bar energy;
+    bool isIncrease = true;
+    float depleteSpeed = 0.75f; // speed of enemy depletion
+    //float regenSpeed = 0.05f; // based on balance bar values
+    float regenSpeed
+    {
+        get
+        {
+            float toReturn = 1.0f * (0.5f - Mathf.Abs(balance.BarFill - 0.5f)) / 0.5f;;
+            Debug.Log(toReturn);
+            return toReturn;
+        }
+    }
 
     // Use this for initialization
 	void Start () {
@@ -19,10 +31,6 @@ public class BarManager : MonoBehaviour
     {
         return (Mathf.PI - val) / Mathf.PI;
     }
-
-    bool isIncrease = true;
-    float depleteSpeed = 0.1f; // speed of enemy depletion
-    float regenSpeed = 0.05f; // based on balance bar values
 
 	// Update is called once per frame
 	void Update ()
@@ -54,5 +62,17 @@ public class BarManager : MonoBehaviour
     void OnEmpty(object sender, EventArgs e)
     {
         Debug.Log("You're out of energy!");
+        // enable physics
+        
+        // stop camera from being locked
+        Camera.main.gameObject.SendMessage("UnLock");
+
+        // in body update()
+        //Vector3 screenPos = Camera.main.WorldToScreenPoint( this.transform.position );
+        // if(screenPos.y < 0)
+        // off the screen
+        //      showGUIMessage
+        //          restartPlayer at last monkey checkpoint (re-lock camera)
+        //          restartPlayer as first person controller
     }
 }
