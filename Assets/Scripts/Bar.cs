@@ -40,7 +40,7 @@ public class Bar : MonoBehaviour
     {
         get
         {
-            return barFill == 1.0f;
+            return barFill >= 1.0f;
         }
     }
 
@@ -48,7 +48,7 @@ public class Bar : MonoBehaviour
     {
         get
         {
-            return barFill == 0.0f;
+            return barFill <= 0.0f;
         }
     }
 

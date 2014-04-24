@@ -7,7 +7,6 @@ public class Body : MonoBehaviour
     private GameObject RArm;
     private GameObject LLeg;
     private GameObject RLeg;
-    private GameObject body;
     private GameObject head;
     private float speed = 0.5f;
 
@@ -16,7 +15,33 @@ public class Body : MonoBehaviour
     {
         get
         {
-            return Mathf.Acos(Vector3.Dot(head.transform.position - body.transform.position, Vector3.right));
+            Vector3 direction = head.transform.position - this.transform.position;
+            return Mathf.Atan2(direction.y, direction.x);
+        }
+    }
+
+    public float GetRightAngle
+    {
+        get
+        {
+            Vector3 direction = this.transform.right;
+            return Mathf.Atan2(direction.y, direction.x);
+        }
+    }
+
+    public float GetDownAngle
+    {
+        get
+        {
+            return GetBalance - Mathf.PI;
+        }
+    }
+
+    public float GetLeftAngle
+    {
+        get
+        {
+            return GetRightAngle + Mathf.PI;
         }
     }
 
@@ -31,11 +56,10 @@ public class Body : MonoBehaviour
         RArm.SendMessage("SetLowerLimit",-45f); // update sets to RLeg angle
         LLeg = GameObject.Find("LLeg");
         LLeg.SendMessage("SetUpperLimit",-90f);
-        LLeg.SendMessage("SetLowerLimit",-179f);
+        LLeg.SendMessage("SetLowerLimit",-180f);
         RLeg = GameObject.Find("RLeg");
         RLeg.SendMessage("SetUpperLimit",0f);
         RLeg.SendMessage("SetLowerLimit",-90f);
-        body = GameObject.Find("Body");
         head = GameObject.Find("Head");
     }
 
@@ -46,95 +70,120 @@ public class Body : MonoBehaviour
         TurnBody();
 
         //Debug.Log(GetAngle(LArm));
-        LArm.SendMessage("SetUpperLimit", GetAngle(LLeg));
-        RArm.SendMessage("SetLowerLimit", GetAngle(RLeg));
+        LArm.SendMessage("SetLowerLimit", GetBalance * Mathf.Rad2Deg); // cannot go farther clockwise than head
+        LArm.SendMessage("SetUpperLimit", GetAngle(LLeg)); // cannot go farther counter-clockwise than left leg
 
-        /*// basic translations for testing
+        RArm.SendMessage("SetLowerLimit", GetAngle(RLeg)); // cannot go farther clockwise than right leg 
+        RArm.SendMessage("SetUpperLimit", GetBalance * Mathf.Rad2Deg); // cannot go farther counter-clockwise than head
+
+        RLeg.SendMessage("SetLowerLimit", GetDownAngle * Mathf.Rad2Deg); // cannot go farther clockwise than directly down
+        float val = Mathf.Max(GetAngle(RArm), GetRightAngle * Mathf.Rad2Deg);
+        if (GetAngle(RArm) < 90.0f && GetRightAngle * Mathf.Rad2Deg < 90.0f)
+        {
+            val = Mathf.Min(GetAngle(RArm), GetRightAngle * Mathf.Rad2Deg);
+        }
+        RLeg.SendMessage("SetUpperLimit", val); // cannot go farther counter-clockwise than directly right or to right arm
+
+        val = Mathf.Max(GetAngle(LArm), GetLeftAngle * Mathf.Rad2Deg);
+        LLeg.SendMessage("SetLowerLimit", val); // cannot go farther clockwise than directly left or to left arm
+        LLeg.SendMessage("SetUpperLimit", GetDownAngle * Mathf.Rad2Deg); // cannot go farther counter-clockwise than directly down
+
+        //*// basic translations for testing
         if (Input.GetKey(KeyCode.W))
         {
-            body.transform.Translate(Vector3.up * speed);
+            this.transform.Translate(Vector3.up * speed);
         }
         if (Input.GetKey(KeyCode.S))
         {
-            body.transform.Translate(Vector3.down * speed);
+            this.transform.Translate(Vector3.down * speed);
         }
         if (Input.GetKey(KeyCode.A))
         {
-            body.transform.Translate(Vector3.left * speed);
+            this.transform.Translate(Vector3.left * speed);
         }
         if (Input.GetKey(KeyCode.D))
         {
-            body.transform.Translate(Vector3.right * speed);
+            this.transform.Translate(Vector3.right * speed);
         }
         //*/
 
-        /* // basic rotations for testing
+        //* // basic rotations for testing
         if (Input.GetKey(KeyCode.J))
         {
-            body.transform.Rotate(Vector3.forward, 2.0f * speed);
+            this.transform.Rotate(Vector3.forward, 2.0f * speed);
         }
         if (Input.GetKey(KeyCode.L))
         {
-            body.transform.Rotate(Vector3.forward, -2.0f * speed);
+            this.transform.Rotate(Vector3.forward, -2.0f * speed);
         }//*/
     }
 
-    // rotate body based on angle of limbs
+    // rotate this based on angle of limbs
     private void TurnBody()
     {
-        // Create two vectors in the form of an X across the body's limbs
+        // Create two vectors in the form of an X across the this's limbs
         Vector3 positiveLine = RArm.transform.position - LLeg.transform.position;
         Vector3 negativeLine = LArm.transform.position - RLeg.transform.position;
         positiveLine.Normalize();
         negativeLine.Normalize();
         
         // find the angle of the vectors and the bodies up vector
-        float leftAngle = Mathf.Acos(Vector3.Dot(positiveLine, body.transform.up)) * Mathf.Rad2Deg;
-        float rightAngle = Mathf.Acos(Vector3.Dot(negativeLine, body.transform.up)) * Mathf.Rad2Deg;
+        float leftAngle = Mathf.Acos(Vector3.Dot(positiveLine, this.transform.up)) * Mathf.Rad2Deg;
+        float rightAngle = Mathf.Acos(Vector3.Dot(negativeLine, this.transform.up)) * Mathf.Rad2Deg;
+        
         //Debug.Log("Left: " + leftAngle + "; Right: " + rightAngle);
 
         float buffer = 5.0f; // degrees
 
+        //*
         // rotate left/right if the difference is greater on one side over the other
         if (rightAngle - leftAngle > buffer)
         {
-            body.transform.Rotate(Vector3.forward, 2.0f * speed); // rotate left
+            this.transform.Rotate(Vector3.forward, 2.0f * speed); // rotate left
         }
         else if (leftAngle - rightAngle > buffer)
         {
-            body.transform.Rotate(Vector3.forward, -2.0f * speed); // rotate right
-        }
+            this.transform.Rotate(Vector3.forward, -2.0f * speed); // rotate right
+        }//*/
+
+        this.transform.eulerAngles = new Vector3(0, 0, this.transform.eulerAngles.z);
+
+        /*
+        float leftAngle = Mathf.Atan2(positiveLine.y, positiveLine.x) * Mathf.Rad2Deg;
+        float rightAngle = Mathf.Atan2(negativeLine.y, negativeLine.x) * Mathf.Rad2Deg;
+        this.transform.eulerAngles = new Vector3(0,0,(leftAngle + rightAngle) * 0.5f - 90.0f);
+        //*/
     }
 
-    // centers body between limbs
+    // centers this between limbs
     private void CenterBody()
     {
         float buffer = 0.5f;
         //Debug.Log("Distances: " + GetDistance(RArm) + " " + GetDistance(LLeg) + " " + GetDistance(LArm) + " " + GetDistance(RLeg));
 
-        // translate body as best as it can between its four limbs
+        // translate this as best as it can between its four limbs
         if (GetDistance(RArm) + buffer < GetDistance(LLeg))
         {
-            body.transform.Translate((LLeg.transform.position - body.transform.position).normalized * 0.01f);
+            this.transform.Translate((LLeg.transform.position - this.transform.position).normalized * 0.01f);
         }
         if (GetDistance(LLeg) + buffer < GetDistance(RArm))
         {
-            body.transform.Translate((RArm.transform.position - body.transform.position).normalized * 0.01f);
+            this.transform.Translate((RArm.transform.position - this.transform.position).normalized * 0.01f);
         }
         if (GetDistance(LArm) + buffer < GetDistance(RLeg))
         {
-            body.transform.Translate((RLeg.transform.position - body.transform.position).normalized * 0.01f);
+            this.transform.Translate((RLeg.transform.position - this.transform.position).normalized * 0.01f);
         }
         if (GetDistance(RLeg) + buffer < GetDistance(LArm))
         {
-            body.transform.Translate((LArm.transform.position - body.transform.position).normalized * 0.01f);
+            this.transform.Translate((LArm.transform.position - this.transform.position).normalized * 0.01f);
         }
     }
 
-    // used in CenterBody(), get's the distance from the limb
+    // used in Centerthis(), get's the distance from the limb
     private float GetDistance(GameObject limb)
     {
-        Vector3 direction = limb.transform.position - body.transform.position;
+        Vector3 direction = limb.transform.position - this.transform.position;
         return direction.magnitude;
     }
 
@@ -143,15 +192,20 @@ public class Body : MonoBehaviour
     {
         return limb.GetComponent<DrawLimb>().Angle;
         /*
-        Vector3 direction = limb.transform.position - body.transform.position;
+        Vector3 direction = limb.transform.position - this.transform.position;
         direction.Normalize();
-        if (limb.transform.position.y < body.transform.position.y)
+        if (limb.transform.position.y < this.transform.position.y)
         {
-            return -Mathf.Acos(Vector3.Dot(direction, body.transform.right)) * Mathf.Rad2Deg;
+            return -Mathf.Acos(Vector3.Dot(direction, this.transform.right)) * Mathf.Rad2Deg;
         }
         else
         {
-            return Mathf.Acos(Vector3.Dot(direction, body.transform.right)) * Mathf.Rad2Deg;
+            return Mathf.Acos(Vector3.Dot(direction, this.transform.right)) * Mathf.Rad2Deg;
         }//*/
     }//*/
+
+    void Fall()
+    {
+        this.rigidbody.useGravity = true;
+    }
 }
