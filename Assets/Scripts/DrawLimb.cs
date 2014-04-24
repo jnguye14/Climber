@@ -13,6 +13,7 @@ public class DrawLimb : MonoBehaviour
     public bool isArm = false;
     private bool hasRock = true; // used to release rock
     public bool isGrabbingRock = false;
+    private bool isFalling = false;
 
     public Color selectedColor = Color.green;
     public Color nonSelectedColor = Color.gray;
@@ -29,6 +30,10 @@ public class DrawLimb : MonoBehaviour
         set
         {
             ll = value;
+            if (value <= 0.0f)
+            {
+                ll += 360.0f;
+            }
         }
     }
 
@@ -43,6 +48,10 @@ public class DrawLimb : MonoBehaviour
         set
         {
             ul = value;
+            if (value <= 0.0f)
+            {
+                ul += 360.0f;
+            }
         }
     }
 
@@ -50,38 +59,24 @@ public class DrawLimb : MonoBehaviour
     {
         get
         {
-            if (isUnder())//this.transform.localPosition.y < 0)
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            if (angle < 0)
             {
-                return -Mathf.Acos(Vector3.Dot(direction, body.transform.right)) * Mathf.Rad2Deg;
+                angle += 360.0f;
             }
-            else
-            {
-                return Mathf.Acos(Vector3.Dot(direction, body.transform.right)) * Mathf.Rad2Deg;
-            }
+            return angle;
         }
         set
         {
             float deg = value;
-            //deg = Mathf.Clamp(deg, lowerLimit, upperLimit) * Mathf.Deg2Rad;
 
-            //deg -= Mathf.Acos(Vector3.Dot(Vector3.right, body.transform.right)) * Mathf.Rad2Deg;
-            //deg += Mathf.Acos(Vector3.Dot(Vector3.right, body.transform.right)) * Mathf.Rad2Deg;
-
-            //Vector3 direction = new Vector3(Mathf.Cos(deg), Mathf.Sin(deg), 0);
-            float theta = Mathf.Acos(body.transform.right.x);
-            float theta2 = Mathf.Asin(body.transform.right.y);
-            Vector3 direction = new Vector3(Mathf.Cos(deg + theta), Mathf.Sin(deg + theta2), 0);
+            float yVal = Mathf.Sin(deg * Mathf.Deg2Rad);
+            float xVal = Mathf.Cos(deg * Mathf.Deg2Rad);
+            Vector3 direction = new Vector3(xVal,yVal,0);
+            direction = this.transform.InverseTransformDirection(direction);
+            
             float currentDistance = Mathf.Clamp((this.transform.position - body.transform.position).magnitude, limbLength, limbLength + limbReach);
             this.transform.position = body.transform.position + direction.normalized * currentDistance;
-
-            /*if (ll < ul)
-            {
-                angle = Mathf.Clamp(value, ll, ul);
-            }
-            else // upper limit less than lower limit
-            {
-                angle = Mathf.Clamp(value, ll, ul);
-            }//*/
         }
     }
 
@@ -104,7 +99,6 @@ public class DrawLimb : MonoBehaviour
         }
     }
 
-    //public float gravity = -1.0f;
     // Use this for initialization
     void Start()
     {
@@ -113,37 +107,41 @@ public class DrawLimb : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
-        if (hasRock)
+    {            
+        if (!isFalling)
         {
-            // clamp position to rock's position
-            if (target != null)
-            {
-                this.transform.position = target.transform.position;
-            }
-            this.GetComponent<MeshRenderer>().material.color = grabColor;
-
             // to prevent limb from being thrown everywhere
-            this.rigidbody.velocity = Vector3.zero;
             this.rigidbody.useGravity = false;
-        }
-        else // mwahahaha
-        {
             this.rigidbody.velocity = Vector3.zero;
-            //Physics.gravity = new Vector3(0f, gravity, 0f);
-            //this.rigidbody.useGravity = true;
+
+            if (hasRock)
+            {
+                // clamp position to rock's position
+                if (target != null)
+                {
+                    this.transform.position = target.transform.position;
+                }
+                this.GetComponent<MeshRenderer>().material.color = grabColor;
+            }
+            else // mwahahaha
+            {
+                Fall();
+            }
         }
 
-        
         // limb is limited within a certain reach
         if (magnitude < limbLength)
         {
             this.transform.position = body.transform.position + direction * limbLength;
+            this.rigidbody.velocity = Vector3.zero;
         }
         else if(magnitude > limbLength + limbReach)
         {
             this.transform.position = body.transform.position + direction * (limbLength + limbReach);
+            this.rigidbody.velocity = Vector3.zero;
         }
+
+        BindToLimits();
         
         // draw the limb from the body to the appendage
         if (body != null)
@@ -152,38 +150,45 @@ public class DrawLimb : MonoBehaviour
             r.SetPosition(0, body.transform.position);
             r.SetPosition(1, this.transform.position);
         }
-		this.transform.position = new Vector3(this.transform.position.x,this.transform.position.y,-1.8f);
+		this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, -1.8f);
         this.transform.rotation = Quaternion.identity;
     }
 
     // clicked on appendage, change to selected color, release the rock if it's holding any
     void OnMouseDown()
     {
+        //isFalling = false;
         this.GetComponent<MeshRenderer>().material.color = selectedColor;
         hasRock = false;
     }
 
     void OnMouseDrag()
     {
+        //isFalling = false;
         // move the limb around
-        this.transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition + new Vector3(0, 0, body.transform.position.z - Camera.main.transform.position.z));
-        
-        if (upperLimit < lowerLimit) // special case, LArm
+        float distanceFromCamera = Camera.main.WorldToScreenPoint(this.transform.position).z; // same as: body.transform.position.z - Camera.main.transform.position.z
+        this.transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition + new Vector3(0, 0, distanceFromCamera));
+    }
+
+    void BindToLimits()
+    {
+        // angle boundary limits
+        if (upperLimit < lowerLimit) // special case, RArm
         {
             if (Angle > upperLimit && Angle < lowerLimit)
             {
-                Angle = (Angle < 0) ? lowerLimit : upperLimit;
+                Angle = (Angle > 180.0f) ? lowerLimit : upperLimit;
             }
         }
-        else if (lowerLimit == -179.0f) // special case, LLeg
+        else if (upperLimit == 360.0f) // special case RLeg
         {
-            if (Angle > 90.0f)
-            {
-                Angle = lowerLimit;
-            }
-            else if (Angle > upperLimit)
+            if (Angle < 90.0f)
             {
                 Angle = upperLimit;
+            }
+            else if (Angle < lowerLimit)
+            {
+                Angle = lowerLimit;
             }
         }
         else
@@ -221,6 +226,7 @@ public class DrawLimb : MonoBehaviour
                 (other.gameObject.tag == "Multihold") ||
                 (other.gameObject.tag == "Checkpoint"))
         {
+            isFalling = false;
             target = other.gameObject;
             hasRock = true;
         }
@@ -244,23 +250,13 @@ public class DrawLimb : MonoBehaviour
         lowerLimit = l;
     }
 
-    private bool isUnder()
+
+    void Fall()
     {
-        // y = mx + b; // where b is at the body's center (localPosition 0,0,0)
-        float y = body.transform.right.y;
-        float x = body.transform.right.x;
-        float m = y / x;
-
-        Vector3 localPos = body.transform.InverseTransformDirection(this.transform.position - body.transform.position);
-
-        float y2 = m * localPos.x;
-        if(y2 - localPos.y < 0)
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
+        // float gravity = -1.0f;
+        //Physics.gravity = new Vector3(0f, gravity, 0f);
+        hasRock = false;
+        this.rigidbody.useGravity = true;
+        isFalling = true;
     }
 }
