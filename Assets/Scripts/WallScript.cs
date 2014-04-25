@@ -46,12 +46,14 @@ public class WallScript : MonoBehaviour {
 	}
 	// Update is called once per frame
 	void Update () {
+		/*
 		if (Input.GetKeyDown ("f")){
 			decrLives();
 		}
 		if (Input.GetKeyDown ("w")){
 			endCourse(true);
 		}
+		*/
 	}
 
 	void decrLives(){
