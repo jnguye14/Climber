@@ -1,18 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class StartInactiveScript : MonoBehaviour {
-
+	public static List<GameObject> DeadObjs;
 	// Use this for initialization
 	void Start () {
-		/*
-		MonoBehaviour[] comps = this.gameObject.GetComponents<MonoBehaviour>();
-		 
-		foreach(MonoBehaviour c in comps)
-		{
-		  c.enabled = false;
-		}
-		*/
+		if (DeadObjs == null) DeadObjs= new List<GameObject>();
+		DeadObjs.Add(this.gameObject);
 		this.gameObject.SetActive(false);
 	}
 	
