@@ -6,14 +6,16 @@ public class StairScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-			for (int x = 0; x < 10; x++) {
+			for (int x = 0; x < 50; x++) {
+                
 				GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                cube.transform.parent = this.transform;
 				//cube.AddComponent<Rigidbody>();
 				cube.transform.rotation = this.gameObject.transform.rotation;
-				cube.transform.position = new Vector3(x, 0.75f+(float)(2*x * Math.Tan(this.gameObject.transform.rotation.z)), 0);
+                cube.transform.localPosition = new Vector3(x, 0.75f + (float)(0.25f * x /* Math.Tan(this.gameObject.transform.rotation.z)*/), 0);
 				cube.transform.localScale+= new Vector3(0,0,3);
 				// y = 2*x
-				cube.transform.position += this.gameObject.transform.position;
+				//cube.transform.position += this.gameObject.transform.position;
 				Debug.Log(this.gameObject.transform.rotation);
 				
 			}

@@ -7,6 +7,7 @@ public class GorillaAnimScript : MonoBehaviour
     public GameObject leftEyeLight;
     public GameObject fireworks; // JFF! =D
     private bool isHowling = false;
+    private bool clicked = false;
 
     // SFX from: http://www.youtube.com/watch?v=2kwFYsZ4PH4
     // by Professional Sound Effects | ProFX http://www.youtube.com/user/profxsounds
@@ -34,14 +35,18 @@ public class GorillaAnimScript : MonoBehaviour
             this.audio.time = 0.4f * this.audio.clip.length;
         }
 
-        if (Input.GetKeyDown(KeyCode.R)) // for testing
+        if (clicked || Input.GetKeyDown(KeyCode.R)) // for testing
         {
+            clicked = false;
             Howl();
         }
 	}
 
+    // OnMouseDown gets called before Update(), animation's needs time before it can play
     void OnMouseDown(){
-        Howl();
+        //Howl();
+        //Debug.Log(this.animation.isPlaying); // is false
+        clicked = true;
     }
 
     // changes the eye lights from white to red and vice-versa
@@ -53,11 +58,11 @@ public class GorillaAnimScript : MonoBehaviour
         }
 
         fireworks.SetActive(true);
-
+        
         // make eyes glow red
         rightEyeLight.light.color = Color.red;
         leftEyeLight.light.color = Color.red;
-
+        
         // play the howling animation
         isHowling = true;
         this.animation.PlayQueued("Howl");
