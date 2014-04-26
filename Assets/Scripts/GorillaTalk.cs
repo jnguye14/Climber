@@ -23,6 +23,7 @@ public class GorillaTalk : MonoBehaviour
         if (!dialogue.isShowing())
         {
             GameObject.Find("Music").SendMessage("SwapMusic");
+            this.SendMessage("SwitchCam");
             clicked = false;
         }
     }

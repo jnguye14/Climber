@@ -74,9 +74,11 @@ public class DrawLimb : MonoBehaviour
             float xVal = Mathf.Cos(deg * Mathf.Deg2Rad);
             Vector3 direction = new Vector3(xVal,yVal,0);
             direction = this.transform.InverseTransformDirection(direction);
-            
-            float currentDistance = Mathf.Clamp((this.transform.position - body.transform.position).magnitude, limbLength, limbLength + limbReach);
-            this.transform.position = body.transform.position + direction.normalized * currentDistance;
+
+            float currentDistance = Mathf.Clamp(magnitude, limbLength, limbLength + limbReach);
+            //float currentDistance = Mathf.Clamp((this.transform.position - body.transform.position).magnitude, limbLength, limbLength + limbReach);
+            this.transform.localPosition = body.transform.localPosition + direction.normalized * currentDistance;
+            //this.transform.position = body.transform.position + direction.normalized * currentDistance;
         }
     }
 
@@ -84,7 +86,9 @@ public class DrawLimb : MonoBehaviour
     {
         get
         {
-            Vector3 direction = this.transform.position - body.transform.position;
+            Vector3 direction = this.transform.parent.InverseTransformDirection(this.transform.position - body.transform.position);
+            //Vector3 direction = this.transform.localPosition - body.transform.localPosition;
+            //Vector3 direction = this.transform.position - body.transform.position;
             direction = new Vector3(direction.x, direction.y, 0.0f);
             return direction.normalized;
         }
@@ -94,15 +98,33 @@ public class DrawLimb : MonoBehaviour
     {
         get
         {
-            Vector3 direction = this.transform.position - body.transform.position;
+            Vector3 direction = this.transform.parent.InverseTransformDirection(this.transform.position - body.transform.position);
+            //Vector3 direction = this.transform.localPosition - body.transform.localPosition;
+            //Vector3 direction = this.transform.position - body.transform.position;
+            direction = new Vector3(direction.x, direction.y, 0.0f);
             return direction.magnitude;
         }
+    }
+
+    private Vector3 initPos;
+    private Quaternion initRot;
+    void Restart()
+    {
+        isFalling = false;
+        this.transform.position = initPos;
+        this.transform.rotation = initRot;
+        this.rigidbody.useGravity = false;
+        this.rigidbody.isKinematic = true;
+        //this.rigidbody.velocity = Vector3.zero;
     }
 
     // Use this for initialization
     void Start()
     {
+        initPos = this.transform.position;
+        initRot = this.transform.rotation;
         this.GetComponent<MeshRenderer>().material.color = nonSelectedColor;
+        this.rigidbody.isKinematic = true;
     }
 
     // Update is called once per frame
@@ -112,7 +134,7 @@ public class DrawLimb : MonoBehaviour
         {
             // to prevent limb from being thrown everywhere
             this.rigidbody.useGravity = false;
-            this.rigidbody.velocity = Vector3.zero;
+            //this.rigidbody.velocity = Vector3.zero;
 
             if (hasRock)
             {
@@ -125,23 +147,25 @@ public class DrawLimb : MonoBehaviour
             }
             else // mwahahaha
             {
-                Fall();
+                //Fall();
             }
         }
 
         // limb is limited within a certain reach
         if (magnitude < limbLength)
         {
-            this.transform.position = body.transform.position + direction * limbLength;
-            this.rigidbody.velocity = Vector3.zero;
+            this.transform.localPosition = body.transform.localPosition + direction * limbLength;
+            //this.transform.position = body.transform.position + direction * limbLength;
+            //this.rigidbody.velocity = Vector3.zero;
         }
         else if(magnitude > limbLength + limbReach)
         {
-            this.transform.position = body.transform.position + direction * (limbLength + limbReach);
-            this.rigidbody.velocity = Vector3.zero;
+            this.transform.localPosition = body.transform.localPosition + direction * (limbLength + limbReach);
+            //this.transform.position = body.transform.position + direction * (limbLength + limbReach);
+            //this.rigidbody.velocity = Vector3.zero;
         }
 
-        BindToLimits();
+        //BindToLimits();
         
         // draw the limb from the body to the appendage
         if (body != null)
@@ -150,8 +174,10 @@ public class DrawLimb : MonoBehaviour
             r.SetPosition(0, body.transform.position);
             r.SetPosition(1, this.transform.position);
         }
-		this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, -1.8f);
-        this.transform.rotation = Quaternion.identity;
+        
+		this.transform.localPosition = new Vector3(this.transform.localPosition.x, this.transform.localPosition.y, 0.0f);
+        //this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, -1.8f);
+        this.transform.localRotation = Quaternion.identity;
     }
 
     // clicked on appendage, change to selected color, release the rock if it's holding any
@@ -166,31 +192,36 @@ public class DrawLimb : MonoBehaviour
     {
         //isFalling = false;
         // move the limb around
-        float distanceFromCamera = Camera.main.WorldToScreenPoint(this.transform.position).z; // same as: body.transform.position.z - Camera.main.transform.position.z
+        float distanceFromCamera = Camera.main.WorldToScreenPoint(this.transform.position).z;
+        // above line same as: body.transform.position.z - Camera.main.transform.position.z
         this.transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition + new Vector3(0, 0, distanceFromCamera));
+        BindToLimits();
     }
 
     void BindToLimits()
     {
         // angle boundary limits
-        if (upperLimit < lowerLimit) // special case, RArm
+        if (upperLimit < lowerLimit) // special case, RArm, RLeg
         {
+            Debug.Log("Upper: " + upperLimit + "; lower: " + lowerLimit + "; angle: " + Angle);
             if (Angle > upperLimit && Angle < lowerLimit)
             {
-                Angle = (Angle > 180.0f) ? lowerLimit : upperLimit;
+                float oneEighty = body.GetComponent<Body>().GetLeftAngle * Mathf.Rad2Deg;
+                Angle = (Angle > oneEighty) ? lowerLimit : upperLimit;
             }
         }
-        else if (upperLimit == 360.0f) // special case RLeg
-        {
-            if (Angle < 90.0f)
-            {
-                Angle = upperLimit;
-            }
-            else if (Angle < lowerLimit)
-            {
-                Angle = lowerLimit;
-            }
-        }
+        //else if (upperLimit == 360.0f) // special case RLeg
+        //{
+        //    Debug.Log(Angle);
+        //    if (Angle < 90.0f)
+        //    {
+        //        Angle = upperLimit;
+        //    }
+        //    else if (Angle < lowerLimit)
+        //    {
+        //        Angle = lowerLimit;
+        //    }
+        //}
         else
         {
             if (Angle < lowerLimit)
@@ -257,6 +288,7 @@ public class DrawLimb : MonoBehaviour
         //Physics.gravity = new Vector3(0f, gravity, 0f);
         hasRock = false;
         this.rigidbody.useGravity = true;
+        this.rigidbody.isKinematic = false;
         isFalling = true;
     }
 }

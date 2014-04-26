@@ -15,7 +15,9 @@ public class Body : MonoBehaviour
     {
         get
         {
-            Vector3 direction = head.transform.position - this.transform.position;
+            Vector3 direction = this.transform.parent.InverseTransformDirection(head.transform.position - this.transform.position);
+            //Vector3 direction = head.transform.localPosition - this.transform.localPosition;
+            //Vector3 direction = head.transform.position - this.transform.position;
             return Mathf.Atan2(direction.y, direction.x);
         }
     }
@@ -45,9 +47,24 @@ public class Body : MonoBehaviour
         }
     }
 
+    private Vector3 initPos;
+    private Quaternion initRot;
+    void Restart()
+    {
+        this.transform.position = initPos;
+        this.transform.rotation = initRot;
+        this.rigidbody.useGravity = false;
+        this.rigidbody.isKinematic = true;
+        //this.rigidbody.velocity = Vector3.zero;
+    }
+
     // Use this for initialization
     void Start()
     {
+        initPos = this.transform.position;
+        initRot = this.transform.rotation;
+        this.rigidbody.isKinematic = true;
+
         LArm = GameObject.Find("LArm");
         LArm.SendMessage("SetUpperLimit",-135f); // update sets to LLeg angle
         LArm.SendMessage("SetLowerLimit",90f);
@@ -146,7 +163,8 @@ public class Body : MonoBehaviour
             this.transform.Rotate(Vector3.forward, -2.0f * speed); // rotate right
         }//*/
 
-        this.transform.eulerAngles = new Vector3(0, 0, this.transform.eulerAngles.z);
+        //this.transform.eulerAngles = new Vector3(0, 0, this.transform.eulerAngles.z);
+        this.transform.localEulerAngles = new Vector3(0, 0, this.transform.localEulerAngles.z);
 
         /*
         float leftAngle = Mathf.Atan2(positiveLine.y, positiveLine.x) * Mathf.Rad2Deg;
@@ -178,34 +196,27 @@ public class Body : MonoBehaviour
         {
             this.transform.Translate((LArm.transform.position - this.transform.position).normalized * 0.01f);
         }
+        this.transform.localPosition = new Vector3(this.transform.localPosition.x, this.transform.localPosition.y, 0.0f);
     }
 
     // used in Centerthis(), get's the distance from the limb
     private float GetDistance(GameObject limb)
     {
-        Vector3 direction = limb.transform.position - this.transform.position;
+        Vector3 direction = this.transform.parent.InverseTransformDirection(limb.transform.position - this.transform.position);
+        //Vector3 direction = limb.transform.localPosition - this.transform.localPosition;
+        //limb.transform.position - this.transform.position;
         return direction.magnitude;
     }
 
-    //*// returns an angle in degrees between -180 and 180 with 0 being directly right
+    // returns an angle in degrees between -180 and 180 with 0 being directly right
     private float GetAngle(GameObject limb)
     {
         return limb.GetComponent<DrawLimb>().Angle;
-        /*
-        Vector3 direction = limb.transform.position - this.transform.position;
-        direction.Normalize();
-        if (limb.transform.position.y < this.transform.position.y)
-        {
-            return -Mathf.Acos(Vector3.Dot(direction, this.transform.right)) * Mathf.Rad2Deg;
-        }
-        else
-        {
-            return Mathf.Acos(Vector3.Dot(direction, this.transform.right)) * Mathf.Rad2Deg;
-        }//*/
-    }//*/
+    }
 
     void Fall()
     {
         this.rigidbody.useGravity = true;
+        this.rigidbody.isKinematic = false;
     }
 }
