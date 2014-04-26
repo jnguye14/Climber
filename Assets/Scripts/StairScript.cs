@@ -6,7 +6,7 @@ public class StairScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-			for (int x = 0; x < 50; x++) {
+			for (int x = 0; x < 10; x++) {
                 
 				GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
                 cube.transform.parent = this.transform;

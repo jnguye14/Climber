@@ -94,8 +94,12 @@ public class Body : MonoBehaviour
         RArm.SendMessage("SetUpperLimit", GetBalance * Mathf.Rad2Deg); // cannot go farther counter-clockwise than head
 
         RLeg.SendMessage("SetLowerLimit", GetDownAngle * Mathf.Rad2Deg); // cannot go farther clockwise than directly down
-        float val = Mathf.Max(GetAngle(RArm), GetRightAngle * Mathf.Rad2Deg);
-        if (GetAngle(RArm) < 90.0f && GetRightAngle * Mathf.Rad2Deg < 90.0f)
+        float val = 360.0f;
+        if (GetAngle(RArm) > 270.0f)
+        {
+            val = GetAngle(RArm);
+        }
+        else if (GetRightAngle * Mathf.Rad2Deg < 90.0f)
         {
             val = Mathf.Min(GetAngle(RArm), GetRightAngle * Mathf.Rad2Deg);
         }
