@@ -13,6 +13,9 @@ public class WallScript : MonoBehaviour {
 	// I noted the specific objects and not just their error text so
 	// denoting paths and errors later will be easier.
 	List<string> errRepTxt;
+
+    private BarManager HUD;
+
 	// Use this for initialization
 	void Start () {
 		numTries = 3;
@@ -26,9 +29,19 @@ public class WallScript : MonoBehaviour {
 		pathTaken = new List<GameObject>();
 		errorReport = new List<GameObject>();
 		errRepTxt = new List<string>();
-	}
+
+        // REALLY BAD WAY TO DO THIS!!!
+        HUD = this.transform.parent.parent.GetChild(0).GetChild(1).GetComponent<BarManager>();
+    }
 	public void addNodeToPathTaken(GameObject newNode){
-		if((pathTaken.Count==0)||(pathTaken[pathTaken.Count-1]!=newNode)){
+        // display feedback from node
+        if (HUD != null)
+        {
+            HUD.SendMessage("SetFeedback", newNode.GetComponent<TriggerBoxScript>().errNodeFeedback);
+        }
+        
+        if ((pathTaken.Count == 0) || (pathTaken[pathTaken.Count - 1] != newNode))
+        {
 			pathTaken.Add(newNode);
 			//print ("it's been added");
 		}
@@ -56,6 +69,13 @@ public class WallScript : MonoBehaviour {
 		*/
 	}
 
+    void Restart()
+    {
+        errRepTxt.Clear();
+        pathTaken.Clear();
+        errorReport.Clear();
+    }
+
 	void decrLives(){
 		--numTries;
 		if(numTries<1) endCourse(false);
@@ -63,8 +83,13 @@ public class WallScript : MonoBehaviour {
 	void endCourse(bool hadWon){
 		List<string> fedB = generateFeedback(hadWon);
 		for(int c = 0; c < fedB.Count ; c++)print(fedB[c]);
-		FeedbackScreenScript.text = fedB.ToArray();
-		Application.LoadLevel("FeedbackScreen");
+		//FeedbackScreenScript.text = fedB.ToArray();
+		//Application.LoadLevel("FeedbackScreen");
+        if (HUD != null)
+        {
+            HUD.SendMessage("SetFeedback","You've finished!");
+            HUD.SendMessage("SetFinalFeedback", fedB.ToArray());
+        }
 	}
 	List<string> generateFeedback(bool hadWon){
 		List<string> outgoing= new List<string>();

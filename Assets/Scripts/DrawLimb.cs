@@ -210,18 +210,6 @@ public class DrawLimb : MonoBehaviour
                 Angle = (Angle > oneEighty) ? lowerLimit : upperLimit;
             }
         }
-        //else if (upperLimit == 360.0f) // special case RLeg
-        //{
-        //    Debug.Log(Angle);
-        //    if (Angle < 90.0f)
-        //    {
-        //        Angle = upperLimit;
-        //    }
-        //    else if (Angle < lowerLimit)
-        //    {
-        //        Angle = lowerLimit;
-        //    }
-        //}
         else
         {
             if (Angle < lowerLimit)
