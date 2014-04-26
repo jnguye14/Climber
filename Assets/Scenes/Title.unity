@@ -133,7 +133,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e77c821b5e8ce40c0b98338691d1e18f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelToLoad: Tutorial
+  levelToLoad: JOETEST 3
   normalTexture: {fileID: 2800000, guid: c1d74afc708a74990b88b1849a10e144, type: 3}
   rollOverTexture: {fileID: 2800000, guid: 65bf10f80c5da4b4ebf98f72f9ac74dc, type: 3}
   beep: {fileID: 8300000, guid: e11e7a9f8565c064d8d9337e801497ed, type: 3}
@@ -517,6 +517,7 @@ GameObject:
   - 131: {fileID: 1973399543}
   - 82: {fileID: 1973399546}
   - 114: {fileID: 1973399545}
+  - 114: {fileID: 1973399547}
   m_Layer: 0
   m_Name: menu_creditsBtn
   m_TagString: Untagged
@@ -560,7 +561,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1973399542}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e77c821b5e8ce40c0b98338691d1e18f, type: 3}
   m_Name: 
@@ -628,3 +629,23 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+--- !u!114 &1973399547
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1973399542}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 020973b03a4d2604eaec31e8a0fd6b7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skin: {fileID: 0}
+  windowRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 100
+    height: 100
+  credits: {fileID: 4900000, guid: 72e084c7d8b3d3242832ec57117593bd, type: 3}
+  creditSpeed: 50
