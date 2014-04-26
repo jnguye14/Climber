@@ -864,19 +864,19 @@ Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 1283061297}
     m_Modifications:
     - target: {fileID: 400012, guid: 6282eb23ef5c84fdbbb34cf4062aed50, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -7.30614567
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400012, guid: 6282eb23ef5c84fdbbb34cf4062aed50, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 1.11271
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400012, guid: 6282eb23ef5c84fdbbb34cf4062aed50, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -1.79999995
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400012, guid: 6282eb23ef5c84fdbbb34cf4062aed50, type: 2}
       propertyPath: m_LocalRotation.x
@@ -1269,6 +1269,33 @@ Prefab:
   m_RootGameObject: {fileID: 40292211}
   m_IsPrefabParent: 0
   m_IsExploded: 1
+--- !u!1 &1283061296
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1283061297}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1283061297
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1283061296}
+  m_LocalRotation: {x: 0, y: .707106829, z: 0, w: .707106829}
+  m_LocalPosition: {x: -.286209822, y: 3.70762134, z: -7.98527002}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 2125499429}
+  m_Father: {fileID: 0}
 --- !u!1 &1501536522
 GameObject:
   m_ObjectHideFlags: 0
@@ -1827,7 +1854,7 @@ Transform:
   m_PrefabInternal: {fileID: 504833220}
   m_GameObject: {fileID: 2125499428}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.30614567, y: 1.11271, z: -1.79999995}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1909194457}
@@ -1835,7 +1862,7 @@ Transform:
   - {fileID: 328888127}
   - {fileID: 1166325638}
   - {fileID: 86500270}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1283061297}
 --- !u!114 &2125499431
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1870,6 +1897,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   feedbackText: 
   Body: {fileID: 1909194456}
+  cameraSwitch: {fileID: 0}
 --- !u!114 &2125499433
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -120,6 +120,29 @@ ModelImporter:
     4300040: rock7
     4300042: rock8
     4300044: rock9
+    6400000: rock1
+    6400002: rock2
+    6400004: rock3
+    6400006: rock4
+    6400008: rock5
+    6400010: rock6
+    6400012: rock7
+    6400014: rock8
+    6400016: rock9
+    6400018: stick1
+    6400020: stick10
+    6400022: stick11
+    6400024: stick12
+    6400026: stick13
+    6400028: stick14
+    6400030: stick2
+    6400032: stick3
+    6400034: stick4
+    6400036: stick5
+    6400038: stick6
+    6400040: stick7
+    6400042: stick8
+    6400044: stick9
     11100000: //RootNode
   materials:
     importMaterials: 1
@@ -141,7 +164,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: .100000001
     meshCompression: 0
-    addColliders: 0
+    addColliders: 1
     importBlendShapes: 1
     swapUVChannels: 0
     generateSecondaryUV: 0

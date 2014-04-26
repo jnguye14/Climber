@@ -12,8 +12,9 @@ public class CameraLock : MonoBehaviour
         if (objToLookAt != null)
         {
             Vector3 pos = objToLookAt.transform.position;
-            pos.z += -distance;
+            pos -= objToLookAt.transform.forward * distance;
             this.transform.position = pos;
+            this.transform.LookAt(objToLookAt.transform);
         }
 	}
 

@@ -22,6 +22,7 @@ public class BarManager : MonoBehaviour
     private Rect windowRect = new Rect(40.0f, 40.0f, 20.0f, 20.0f);
 
     public GameObject Body;
+    public GameObject cameraSwitch;
 
     // Use this for initialization
 	void Start ()
@@ -82,12 +83,26 @@ public class BarManager : MonoBehaviour
         GUILayout.BeginHorizontal();
         if (GUILayout.Button("Climb again?"))
         {
-            Debug.Log("Restart at last monkey checkpoint");
+            feedbackText = "";
+            energy.setAmount(1.0f);
+            outOfEnergy = false;
             Camera.main.gameObject.SendMessage("LockCameraTo", Body);
+            this.gameObject.BroadcastMessage("Restart");
+            //Debug.Log("Restart at last monkey checkpoint");
         }
         if (GUILayout.Button("Return to Bottom"))
         {
-            Debug.Log("Restart to first person camera");
+            feedbackText = "";
+            energy.setAmount(1.0f);
+            outOfEnergy = false;
+            Camera.main.gameObject.SendMessage("LockCameraTo", Body);
+            this.gameObject.BroadcastMessage("Restart");
+            //Debug.Log("Restart to first person camera");
+            if (cameraSwitch != null)
+            {
+                GameObject.Find("Music").SendMessage("SwapMusic");
+                cameraSwitch.SendMessage("SwitchCam");
+            }
         }
         GUILayout.EndHorizontal();
     }
