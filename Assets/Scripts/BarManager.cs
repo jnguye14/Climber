@@ -2,11 +2,13 @@
 using UnityEngine;
 using System.Collections;
 
+// Controls the HUD of the actual game
 public class BarManager : MonoBehaviour
 {
     private BalanceSlider balance;
     private Bar energy;
     private bool outOfEnergy = false;
+    private bool endGame = false;
     float depleteSpeed = 0.75f; // speed of enemy depletion
     float regenSpeed
     {
@@ -18,8 +20,9 @@ public class BarManager : MonoBehaviour
     }
     
     public string feedbackText = "";
+    public string[] finalFeedbackText = {""};
     private Rect feedbackBox = new Rect(70.0f, 0.0f, 30.0f, 20.0f); // upper right of screen
-    private Rect windowRect = new Rect(40.0f, 40.0f, 20.0f, 20.0f);
+    private Rect windowRect = new Rect(30.0f, 30.0f, 40.0f, 40.0f);
 
     public GameObject Body;
     public GameObject cameraSwitch;
@@ -66,37 +69,46 @@ public class BarManager : MonoBehaviour
         feedbackText = text;
     }
 
+    void SetFinalFeedback(string[] text)
+    {
+        finalFeedbackText = text;
+        endGame = true;
+    }
+
     void OnGUI()
     {
         string text = "Energy: " + (energy.BarFill * 100.0f) + "\n";
         text += feedbackText;
         GUI.Box(adjRect(feedbackBox), text);
 
-        if (outOfEnergy)
+        if (outOfEnergy || endGame)
         {
-            GUI.Window(0, adjRect(windowRect), windowFunc, "You have fallen");
+            GUI.Window(0, adjRect(windowRect), windowFunc, (outOfEnergy ? "You have fallen" : "You've reached the top!" ));
         }
     }
 
+    Vector2 scrollPos = Vector2.zero;
+
     void windowFunc(int id)
     {
+        GUILayout.BeginVertical();
+        GUILayout.BeginScrollView(scrollPos, GUI.skin.scrollView);
+        string text = "";
+        for (int i = 0; i < finalFeedbackText.Length; i++)
+        {
+            text += finalFeedbackText[i] + "\n";
+        }
+        GUILayout.Box(text);
+        GUILayout.EndScrollView();
         GUILayout.BeginHorizontal();
         if (GUILayout.Button("Climb again?"))
         {
-            feedbackText = "";
-            energy.setAmount(1.0f);
-            outOfEnergy = false;
-            Camera.main.gameObject.SendMessage("LockCameraTo", Body);
-            this.gameObject.BroadcastMessage("Restart");
             //Debug.Log("Restart at last monkey checkpoint");
+            Reset();
         }
         if (GUILayout.Button("Return to Bottom"))
         {
-            feedbackText = "";
-            energy.setAmount(1.0f);
-            outOfEnergy = false;
-            Camera.main.gameObject.SendMessage("LockCameraTo", Body);
-            this.gameObject.BroadcastMessage("Restart");
+            Reset();
             //Debug.Log("Restart to first person camera");
             if (cameraSwitch != null)
             {
@@ -105,6 +117,20 @@ public class BarManager : MonoBehaviour
             }
         }
         GUILayout.EndHorizontal();
+        GUILayout.EndVertical();
+    }
+
+    void Reset()
+    {
+        feedbackText = "";
+        energy.setAmount(1.0f);
+        endGame = false;
+        outOfEnergy = false;
+        Camera.main.gameObject.SendMessage("LockCameraTo", Body);
+        //this.gameObject.BroadcastMessage("Restart");
+
+        // REALLY BAD WAY TO DO THIS
+        this.transform.parent.parent.gameObject.BroadcastMessage("Restart");
     }
 
     // returns Rectangle adjusted to screen size

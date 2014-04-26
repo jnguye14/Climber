@@ -3982,7 +3982,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isEndNode: 0
   isErrNode: 0
-  errNodeFeedback: Come at me bro
+  errNodeFeedback: Half way there!
 --- !u!23 &67898636
 Renderer:
   m_ObjectHideFlags: 0
@@ -4503,7 +4503,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isEndNode: 0
   isErrNode: 0
-  errNodeFeedback: Come at me bro
+  errNodeFeedback: Almost there!
 --- !u!23 &72567784
 Renderer:
   m_ObjectHideFlags: 0
@@ -11156,6 +11156,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   feedbackText: 
+  finalFeedbackText:
+  - 
   Body: {fileID: 988254619}
   cameraSwitch: {fileID: 1139938632}
 --- !u!114 &186646732
@@ -13380,7 +13382,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isEndNode: 0
   isErrNode: 0
-  errNodeFeedback: Come at me bro
+  errNodeFeedback: You're just getting started!
 --- !u!23 &228612749
 Renderer:
   m_ObjectHideFlags: 0
@@ -21686,7 +21688,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isEndNode: 0
   isErrNode: 0
-  errNodeFeedback: Come at me bro
+  errNodeFeedback: You're doing great!
 --- !u!23 &379899233
 Renderer:
   m_ObjectHideFlags: 0
@@ -24842,7 +24844,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isEndNode: 0
   isErrNode: 0
-  errNodeFeedback: Come at me bro
+  errNodeFeedback: Follow the arrow!
 --- !u!23 &434652056
 Renderer:
   m_ObjectHideFlags: 0
@@ -47223,7 +47225,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isEndNode: 0
   isErrNode: 0
-  errNodeFeedback: Come at me bro
+  errNodeFeedback: Looking good!
 --- !u!23 &832679594
 Renderer:
   m_ObjectHideFlags: 0
@@ -51633,7 +51635,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isEndNode: 0
   isErrNode: 0
-  errNodeFeedback: Come at me bro
+  errNodeFeedback: The arrow says up!
 --- !u!23 &892848045
 Renderer:
   m_ObjectHideFlags: 0
@@ -60391,7 +60393,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isEndNode: 0
   isErrNode: 0
-  errNodeFeedback: Come at me bro
+  errNodeFeedback: This is just the begining
 --- !u!23 &1018920986
 Renderer:
   m_ObjectHideFlags: 0
@@ -61691,6 +61693,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   feedbackText: 
+  finalFeedbackText:
+  - 
   Body: {fileID: 135482354}
   cameraSwitch: {fileID: 1136495694}
 --- !u!114 &1037348378
@@ -69667,7 +69671,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text:
-  - Welcome to Monkey Mountain! (Click to Continue)
+  - Welcome to Monkey Mountain!\n(Click to Continue)
   - Use either the arrow keys or the W, A, S, and D, keys to move.
   - You can use the spacebar to jump.
   - Go around and talk to the natives by clicking on them.
@@ -74819,7 +74823,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isEndNode: 0
   isErrNode: 0
-  errNodeFeedback: Come at me bro
+  errNodeFeedback: Just a little further!
 --- !u!23 &1270225944
 Renderer:
   m_ObjectHideFlags: 0
@@ -111890,6 +111894,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   feedbackText: 
+  finalFeedbackText:
+  - 
   Body: {fileID: 105825648}
   cameraSwitch: {fileID: 687925178}
 --- !u!114 &1906975242
