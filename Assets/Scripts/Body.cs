@@ -109,7 +109,7 @@ public class Body : MonoBehaviour
         LLeg.SendMessage("SetLowerLimit", val); // cannot go farther clockwise than directly left or to left arm
         LLeg.SendMessage("SetUpperLimit", GetDownAngle * Mathf.Rad2Deg); // cannot go farther counter-clockwise than directly down
 
-        //*// basic translations for testing
+        /*basic translations for testing
         if (Input.GetKey(KeyCode.W))
         {
             this.transform.Translate(Vector3.up * speed);
@@ -126,9 +126,9 @@ public class Body : MonoBehaviour
         {
             this.transform.Translate(Vector3.right * speed);
         }
-        //*/
+        */
 
-        //* // basic rotations for testing
+        /* basic rotations for testing
         if (Input.GetKey(KeyCode.J))
         {
             this.transform.Rotate(Vector3.forward, 2.0f * speed);
@@ -136,7 +136,7 @@ public class Body : MonoBehaviour
         if (Input.GetKey(KeyCode.L))
         {
             this.transform.Rotate(Vector3.forward, -2.0f * speed);
-        }//*/
+        }*/
     }
 
     // rotate this based on angle of limbs
